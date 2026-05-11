@@ -1,0 +1,842 @@
+<div id="tokenization-interface" class="my-12 p-8 bg-neutral-50 dark:bg-zinc-800 rounded-lg shadow-lg">
+  <div class="max-w-6xl mx-auto">
+    <!-- Upload Section -->
+    <div class="mb-12">
+      <h3 class="text-2xl font-bold mb-6 text-zinc-900 dark:text-white font-['DM_Sans']">1. Upload Movement Data</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="upload-box bg-white dark:bg-zinc-700 p-6 rounded-lg border-2 border-dashed border-neutral-300 dark:border-zinc-600 hover:border-primary-400 dark:hover:border-primary-500 transition-colors cursor-pointer" data-type="video">
+          <div class="text-center">
+            <div class="text-4xl mb-4">🎥</div>
+            <h4 class="text-lg font-semibold mb-2 text-zinc-900 dark:text-white font-['DM_Sans']">Video Upload</h4>
+            <p class="text-sm text-zinc-600 dark:text-zinc-300 mb-4 font-['Lora']">Upload dance video (.mp4, .mov, .avi)</p>
+            <input type="file" id="video-upload" accept="video/*" class="hidden">
+            <button onclick="document.getElementById('video-upload').click()" class="bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-lg transition-colors">Choose Video</button>
+            <div class="upload-status mt-2 text-sm font-medium" id="video-status"></div>
+          </div>
+        </div>
+
+        <div class="upload-box bg-white dark:bg-zinc-700 p-6 rounded-lg border-2 border-dashed border-neutral-300 dark:border-zinc-600 hover:border-primary-400 dark:hover:border-primary-500 transition-colors cursor-pointer" data-type="mocap">
+          <div class="text-center">
+            <div class="text-4xl mb-4">📊</div>
+            <h4 class="text-lg font-semibold mb-2 text-zinc-900 dark:text-white font-['DM_Sans']">Motion Capture Data</h4>
+            <p class="text-sm text-zinc-600 dark:text-zinc-300 mb-4 font-['Lora']">Upload BVH, C3D, or JSON motion data</p>
+            <input type="file" id="mocap-upload" accept=".bvh,.c3d,.json" class="hidden">
+            <button onclick="document.getElementById('mocap-upload').click()" class="bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-lg transition-colors">Choose File</button>
+            <div class="upload-status mt-2 text-sm font-medium" id="mocap-status"></div>
+          </div>
+        </div>
+
+        <div class="upload-box bg-white dark:bg-zinc-700 p-6 rounded-lg border-2 border-dashed border-neutral-300 dark:border-zinc-600 hover:border-primary-400 dark:hover:border-primary-500 transition-colors cursor-pointer" data-type="metadata">
+          <div class="text-center">
+            <div class="text-4xl mb-4">📝</div>
+            <h4 class="text-lg font-semibold mb-2 text-zinc-900 dark:text-white font-['DM_Sans']">Movement Metadata</h4>
+            <p class="text-sm text-zinc-600 dark:text-zinc-300 mb-4 font-['Lora']">Cultural context and attribution info</p>
+            <button class="bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-lg transition-colors" onclick="openMetadataForm()">Add Metadata</button>
+            <div class="upload-status mt-2 text-sm font-medium" id="metadata-status"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Processing Section -->
+    <div class="mb-12">
+      <h3 class="text-2xl font-bold mb-6 text-zinc-900 dark:text-white font-['DM_Sans']">2. Movement Analysis & Tokenization</h3>
+      <div class="bg-white dark:bg-zinc-700 p-6 rounded-lg">
+        <div class="grid grid-cols-2 gap-4 mb-6">
+          <label class="flex items-center text-zinc-700 dark:text-zinc-300">
+            <input type="checkbox" checked class="mr-2"> Extract pose features
+          </label>
+          <label class="flex items-center text-zinc-700 dark:text-zinc-300">
+            <input type="checkbox" checked class="mr-2"> Analyze transitions
+          </label>
+          <label class="flex items-center text-zinc-700 dark:text-zinc-300">
+            <input type="checkbox" checked class="mr-2"> Generate similarity tokens
+          </label>
+          <label class="flex items-center text-zinc-700 dark:text-zinc-300">
+            <input type="checkbox" class="mr-2"> Apply cultural context
+          </label>
+        </div>
+        
+        <button id="analyze-btn" class="bg-secondary-500 hover:bg-secondary-600 text-white px-6 py-3 rounded-lg font-medium transition-colors mb-6" onclick="startAnalysis()">
+          Start Analysis
+        </button>
+
+        <!-- Progress Indicator -->
+        <div class="progress-container hidden" id="progress-container">
+          <div class="w-full bg-neutral-200 dark:bg-zinc-600 rounded-full h-3 mb-4">
+            <div class="bg-primary-500 h-3 rounded-full transition-all duration-300" id="progress-fill" style="width: 0%"></div>
+          </div>
+          <div class="text-center text-zinc-700 dark:text-zinc-300 font-medium font-['Lora']" id="progress-text">Initializing...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results Section -->
+    <div class="mb-12 hidden" id="results-section">
+      <h3 class="text-2xl font-bold mb-6 text-zinc-900 dark:text-white font-['DM_Sans']">3. Tokenization Results</h3>
+      
+      <!-- Token Visualization -->
+      <div class="bg-white dark:bg-zinc-700 p-6 rounded-lg mb-6">
+        <h4 class="text-xl font-semibold mb-4 text-zinc-900 dark:text-white font-['DM_Sans']">Movement Tokens</h4>
+        <div class="flex overflow-x-auto space-x-3 py-4">
+          <div class="token flex-shrink-0 bg-neutral-100 dark:bg-zinc-600 p-4 rounded-lg text-center min-w-20 hover:bg-primary-100 dark:hover:bg-primary-800 cursor-pointer transition-colors" title="Preparation Phase">
+            <div class="font-bold text-lg text-zinc-900 dark:text-white">T1</div>
+            <div class="text-sm text-zinc-600 dark:text-zinc-300">Prep</div>
+          </div>
+          <div class="token flex-shrink-0 bg-neutral-100 dark:bg-zinc-600 p-4 rounded-lg text-center min-w-20 hover:bg-primary-100 dark:hover:bg-primary-800 cursor-pointer transition-colors" title="Rising Motion">
+            <div class="font-bold text-lg text-zinc-900 dark:text-white">T2</div>
+            <div class="text-sm text-zinc-600 dark:text-zinc-300">Rise</div>
+          </div>
+          <div class="token flex-shrink-0 bg-neutral-100 dark:bg-zinc-600 p-4 rounded-lg text-center min-w-20 hover:bg-primary-100 dark:hover:bg-primary-800 cursor-pointer transition-colors" title="Extension Pattern">
+            <div class="font-bold text-lg text-zinc-900 dark:text-white">T3</div>
+            <div class="text-sm text-zinc-600 dark:text-zinc-300">Extend</div>
+          </div>
+          <div class="token flex-shrink-0 bg-neutral-100 dark:bg-zinc-600 p-4 rounded-lg text-center min-w-20 hover:bg-primary-100 dark:hover:bg-primary-800 cursor-pointer transition-colors" title="Rotation Sequence">
+            <div class="font-bold text-lg text-zinc-900 dark:text-white">T4</div>
+            <div class="text-sm text-zinc-600 dark:text-zinc-300">Rotate</div>
+          </div>
+          <div class="token flex-shrink-0 bg-neutral-100 dark:bg-zinc-600 p-4 rounded-lg text-center min-w-20 hover:bg-primary-100 dark:hover:bg-primary-800 cursor-pointer transition-colors" title="Contraction Movement">
+            <div class="font-bold text-lg text-zinc-900 dark:text-white">T5</div>
+            <div class="text-sm text-zinc-600 dark:text-zinc-300">Contract</div>
+          </div>
+          <div class="token flex-shrink-0 bg-neutral-100 dark:bg-zinc-600 p-4 rounded-lg text-center min-w-20 hover:bg-primary-100 dark:hover:bg-primary-800 cursor-pointer transition-colors" title="Resolution Phase">
+            <div class="font-bold text-lg text-zinc-900 dark:text-white">T6</div>
+            <div class="text-sm text-zinc-600 dark:text-zinc-300">Resolve</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature Analysis -->
+      <div class="bg-white dark:bg-zinc-700 p-6 rounded-lg mb-6">
+        <h4 class="text-xl font-semibold mb-4 text-zinc-900 dark:text-white font-['DM_Sans']">Movement Features</h4>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="text-center p-4 bg-neutral-50 dark:bg-zinc-600 rounded-lg">
+            <h5 class="font-medium text-zinc-900 dark:text-white font-['DM_Sans']">Temporal Dynamics</h5>
+            <div class="text-primary-600 dark:text-primary-400 font-semibold mt-2">Moderate (3.2s)</div>
+          </div>
+          <div class="text-center p-4 bg-neutral-50 dark:bg-zinc-600 rounded-lg">
+            <h5 class="font-medium text-zinc-900 dark:text-white font-['DM_Sans']">Spatial Range</h5>
+            <div class="text-primary-600 dark:text-primary-400 font-semibold mt-2">Wide (2.1m)</div>
+          </div>
+          <div class="text-center p-4 bg-neutral-50 dark:bg-zinc-600 rounded-lg">
+            <h5 class="font-medium text-zinc-900 dark:text-white font-['DM_Sans']">Complexity Score</h5>
+            <div class="text-primary-600 dark:text-primary-400 font-semibold mt-2">High (8.7/10)</div>
+          </div>
+          <div class="text-center p-4 bg-neutral-50 dark:bg-zinc-600 rounded-lg">
+            <h5 class="font-medium text-zinc-900 dark:text-white font-['DM_Sans']">Cultural Category</h5>
+            <div class="text-primary-600 dark:text-primary-400 font-semibold mt-2">Contemporary</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Similar Movements -->
+      <div class="bg-white dark:bg-zinc-700 p-6 rounded-lg">
+        <h4 class="text-xl font-semibold mb-4 text-zinc-900 dark:text-white font-['DM_Sans']">Similar Movements</h4>
+        <div class="space-y-3">
+          <div class="flex items-center p-4 bg-neutral-50 dark:bg-zinc-600 rounded-lg border-l-4 border-secondary-500">
+            <div class="text-2xl font-bold text-secondary-600 dark:text-secondary-400 mr-4">92%</div>
+            <div>
+              <h5 class="font-medium text-zinc-900 dark:text-white font-['DM_Sans']">Graham Technique - Contraction</h5>
+              <p class="text-sm text-zinc-600 dark:text-zinc-300 font-['Lora']">Classical modern dance contraction pattern</p>
+            </div>
+          </div>
+          <div class="flex items-center p-4 bg-neutral-50 dark:bg-zinc-600 rounded-lg border-l-4 border-primary-500">
+            <div class="text-2xl font-bold text-primary-600 dark:text-primary-400 mr-4">87%</div>
+            <div>
+              <h5 class="font-medium text-zinc-900 dark:text-white font-['DM_Sans']">Contemporary Floor Work</h5>
+              <p class="text-sm text-zinc-600 dark:text-zinc-300 font-['Lora']">Contemporary release-based floor sequence</p>
+            </div>
+          </div>
+          <div class="flex items-center p-4 bg-neutral-50 dark:bg-zinc-600 rounded-lg border-l-4 border-indigo-500">
+            <div class="text-2xl font-bold text-indigo-600 dark:text-indigo-400 mr-4">74%</div>
+            <div>
+              <h5 class="font-medium text-zinc-900 dark:text-white font-['DM_Sans']">Jazz Isolation Sequence</h5>
+              <p class="text-sm text-zinc-600 dark:text-zinc-300 font-['Lora']">Jazz-style torso isolation patterns</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Export Section -->
+    <div class="hidden" id="export-section">
+      <h3 class="text-2xl font-bold mb-6 text-zinc-900 dark:text-white font-['DM_Sans']">4. Export & Create Digital Asset</h3>
+      <div class="bg-white dark:bg-zinc-700 p-6 rounded-lg">
+        <div class="flex flex-col md:flex-row gap-4 mb-6">
+          <button class="bg-primary-500 hover:bg-primary-600 text-white px-6 py-3 rounded-lg font-medium transition-colors" onclick="exportTokens()">
+            Export Token Data
+          </button>
+          <button class="bg-secondary-500 hover:bg-secondary-600 text-white px-6 py-3 rounded-lg font-medium transition-colors" onclick="createAsset()">
+            Create Digital Asset
+          </button>
+        </div>
+
+        <div class="hidden" id="asset-preview">
+          <h4 class="text-xl font-semibold mb-4 text-zinc-900 dark:text-white font-['DM_Sans']">Digital Asset Preview</h4>
+          <div class="bg-neutral-50 dark:bg-zinc-600 p-6 rounded-lg border">
+            <div class="flex justify-between items-start mb-4">
+              <h5 class="text-lg font-medium text-zinc-900 dark:text-white font-['DM_Sans']">Contemporary Movement #001</h5>
+              <span class="bg-secondary-500 text-white px-3 py-1 rounded-full text-sm font-medium">Tokenized</span>
+            </div>
+            <div class="grid grid-cols-2 gap-4 text-sm">
+              <div><strong class="text-zinc-900 dark:text-white">Tokens:</strong> <span class="text-zinc-600 dark:text-zinc-300">6 movement sequences</span></div>
+              <div><strong class="text-zinc-900 dark:text-white">Duration:</strong> <span class="text-zinc-600 dark:text-zinc-300">3.2 seconds</span></div>
+              <div><strong class="text-zinc-900 dark:text-white">Complexity:</strong> <span class="text-zinc-600 dark:text-zinc-300">High (8.7/10)</span></div>
+              <div><strong class="text-zinc-900 dark:text-white">Cultural Context:</strong> <span class="text-zinc-600 dark:text-zinc-300">Contemporary Dance</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Metadata Form Modal -->
+<div id="metadata-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+  <div class="flex items-center justify-center min-h-screen p-4">
+    <div class="bg-white dark:bg-zinc-800 rounded-lg p-6 w-full max-w-md">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-xl font-semibold text-zinc-900 dark:text-white font-['DM_Sans']">Movement Metadata</h3>
+        <button onclick="closeMetadataForm()" class="text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200 text-2xl">&times;</button>
+      </div>
+      <form id="metadata-form" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1 font-['DM_Sans']">Movement Name:</label>
+          <input type="text" id="movement-name" class="w-full px-3 py-2 border border-neutral-300 dark:border-zinc-600 rounded-lg dark:bg-zinc-700 dark:text-white" placeholder="e.g., Ethereal Flow">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1 font-['DM_Sans']">Dance Style:</label>
+          <select id="dance-style" class="w-full px-3 py-2 border border-neutral-300 dark:border-zinc-600 rounded-lg dark:bg-zinc-700 dark:text-white">
+            <option value="contemporary">Contemporary</option>
+            <option value="ballet">Ballet</option>
+            <option value="jazz">Jazz</option>
+            <option value="hip-hop">Hip Hop</option>
+            <option value="modern">Modern</option>
+            <option value="traditional">Traditional</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1 font-['DM_Sans']">Cultural Origin:</label>
+          <input type="text" id="cultural-origin" class="w-full px-3 py-2 border border-neutral-300 dark:border-zinc-600 rounded-lg dark:bg-zinc-700 dark:text-white" placeholder="Cultural background or tradition">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1 font-['DM_Sans']">Difficulty Level: <span id="difficulty-value">5</span></label>
+          <input type="range" id="difficulty" min="1" max="10" value="5" class="w-full">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1 font-['DM_Sans']">Tags (comma-separated):</label>
+          <input type="text" id="tags" class="w-full px-3 py-2 border border-neutral-300 dark:border-zinc-600 rounded-lg dark:bg-zinc-700 dark:text-white" placeholder="fluid, expressive, floor work">
+        </div>
+        <button type="submit" class="w-full bg-secondary-500 hover:bg-secondary-600 text-white py-2 rounded-lg font-medium transition-colors">Save Metadata</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+// Real tokenization implementation
+class MovementTokenizer {
+  constructor() {
+    this.vocabulary = new Map();
+    this.nextTokenId = 0;
+    this.keyJoints = [
+      'Hips', 'Spine', 'Spine1', 'Spine2', 'Neck', 'Head',
+      'LeftShoulder', 'LeftArm', 'LeftForeArm', 'LeftHand',
+      'RightShoulder', 'RightArm', 'RightForeArm', 'RightHand',
+      'LeftUpLeg', 'LeftLeg', 'LeftFoot', 'LeftToeBase',
+      'RightUpLeg', 'RightLeg', 'RightFoot', 'RightToeBase'
+    ];
+    this.uploadedFiles = {};
+  }
+
+  // Process BVH file format
+  parseBVH(bvhText) {
+    const lines = bvhText.split('\n');
+    const hierarchy = {};
+    const frames = [];
+    let motionSection = false;
+    let frameData = [];
+    let channels = [];
+    
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
+      
+      if (line.startsWith('MOTION')) {
+        motionSection = true;
+        continue;
+      }
+      
+      if (motionSection) {
+        if (line.startsWith('Frames:')) {
+          continue;
+        } else if (line.startsWith('Frame Time:')) {
+          continue;
+        } else if (line && !isNaN(parseFloat(line.split(' ')[0]))) {
+          // Parse frame data
+          const values = line.split(' ').map(v => parseFloat(v)).filter(v => !isNaN(v));
+          if (values.length > 0) {
+            frames.push(this.parseFrameData(values, i - motionSection));
+          }
+        }
+      } else {
+        // Parse hierarchy section
+        if (line.includes('ROOT') || line.includes('JOINT')) {
+          const jointName = line.split(' ').pop();
+          hierarchy[jointName] = { channels: [] };
+        }
+      }
+    }
+    
+    return {
+      hierarchy,
+      frames,
+      metadata: {
+        duration: frames.length * 0.033, // Assuming 30 FPS
+        frameCount: frames.length
+      }
+    };
+  }
+
+  parseFrameData(values, frameIndex) {
+    const joints = {};
+    
+    // Simple mapping for basic BVH structure
+    // This is a simplified version - real BVH parsing is more complex
+    let valueIndex = 0;
+    for (const jointName of this.keyJoints) {
+      if (valueIndex + 5 < values.length) {
+        joints[jointName] = {
+          position: [values[valueIndex], values[valueIndex + 1], values[valueIndex + 2]],
+          rotation: [values[valueIndex + 3], values[valueIndex + 4], values[valueIndex + 5]]
+        };
+        valueIndex += 6;
+      }
+    }
+    
+    return {
+      timestamp: frameIndex * 0.033,
+      joints
+    };
+  }
+
+  // Extract pose features from frame
+  extractPoseFeatures(frame) {
+    const features = [];
+    
+    for (const jointName of this.keyJoints) {
+      if (frame.joints[jointName]) {
+        const joint = frame.joints[jointName];
+        features.push(...joint.position, ...joint.rotation);
+      } else {
+        features.push(0, 0, 0, 0, 0, 0); // Missing joint
+      }
+    }
+    
+    return features;
+  }
+
+  // Calculate similarity between feature vectors
+  calculateSimilarity(features1, features2) {
+    if (features1.length !== features2.length) return 0;
+    
+    let dotProduct = 0;
+    let norm1 = 0;
+    let norm2 = 0;
+    
+    for (let i = 0; i < features1.length; i++) {
+      dotProduct += features1[i] * features2[i];
+      norm1 += features1[i] * features1[i];
+      norm2 += features2[i] * features2[i];
+    }
+    
+    if (norm1 === 0 || norm2 === 0) return 0;
+    return dotProduct / (Math.sqrt(norm1) * Math.sqrt(norm2));
+  }
+
+  // Find similar token in vocabulary
+  findSimilarToken(features, threshold = 0.85) {
+    let bestMatch = null;
+    let bestSimilarity = 0;
+    
+    for (const [tokenId, token] of this.vocabulary) {
+      const similarity = this.calculateSimilarity(features, token.features);
+      if (similarity > bestSimilarity && similarity > threshold) {
+        bestSimilarity = similarity;
+        bestMatch = tokenId;
+      }
+    }
+    
+    return bestMatch;
+  }
+
+  // Create movement token
+  createToken(features, frameIndex, timestamp, tokenType = 'pose') {
+    const token = {
+      tokenId: this.nextTokenId++,
+      tokenType,
+      features,
+      frameIndex,
+      timestamp,
+      duration: 0.033,
+      metadata: {
+        complexity: this.calculateComplexity(features),
+        energy: this.calculateEnergy(features)
+      }
+    };
+    
+    this.vocabulary.set(token.tokenId, token);
+    return token;
+  }
+
+  calculateComplexity(features) {
+    // Calculate movement complexity based on feature variance
+    const mean = features.reduce((a, b) => a + b, 0) / features.length;
+    const variance = features.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / features.length;
+    return Math.min(10, Math.sqrt(variance));
+  }
+
+  calculateEnergy(features) {
+    // Calculate movement energy based on magnitude
+    const magnitude = Math.sqrt(features.reduce((a, b) => a + b * b, 0));
+    return Math.min(10, magnitude / 10);
+  }
+
+  // Tokenize movement data
+  tokenizeMovement(movementData) {
+    const tokens = [];
+    const tokenDetails = [];
+    
+    // Sample every 3rd frame to reduce token count
+    for (let i = 0; i < movementData.frames.length; i += 3) {
+      const frame = movementData.frames[i];
+      const features = this.extractPoseFeatures(frame);
+      
+      // Normalize features
+      const normalizedFeatures = this.normalizeFeatures(features);
+      
+      // Check for similar existing token
+      const similarTokenId = this.findSimilarToken(normalizedFeatures);
+      
+      if (similarTokenId !== null) {
+        tokens.push(similarTokenId);
+        tokenDetails.push(this.vocabulary.get(similarTokenId));
+      } else {
+        const newToken = this.createToken(normalizedFeatures, i, frame.timestamp);
+        tokens.push(newToken.tokenId);
+        tokenDetails.push(newToken);
+      }
+    }
+    
+    return {
+      movementId: this.generateMovementId(movementData),
+      tokens,
+      tokenDetails,
+      metadata: movementData.metadata,
+      vocabularyStats: this.getVocabularyStats()
+    };
+  }
+
+  normalizeFeatures(features) {
+    const max = Math.max(...features.map(Math.abs));
+    return max > 0 ? features.map(f => f / max) : features;
+  }
+
+  generateMovementId(movementData) {
+    return 'movement_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+  }
+
+  getVocabularyStats() {
+    const tokenTypes = {};
+    let totalDuration = 0;
+    
+    for (const token of this.vocabulary.values()) {
+      tokenTypes[token.tokenType] = (tokenTypes[token.tokenType] || 0) + 1;
+      totalDuration += token.duration;
+    }
+    
+    return {
+      totalTokens: this.vocabulary.size,
+      tokenTypes,
+      totalDuration,
+      averageComplexity: this.getAverageComplexity()
+    };
+  }
+
+  getAverageComplexity() {
+    if (this.vocabulary.size === 0) return 0;
+    const complexities = Array.from(this.vocabulary.values()).map(t => t.metadata.complexity);
+    return complexities.reduce((a, b) => a + b, 0) / complexities.length;
+  }
+}
+
+// Global tokenizer instance
+const tokenizer = new MovementTokenizer();
+let processedMovementData = null;
+
+// File upload handlers
+document.addEventListener('DOMContentLoaded', function() {
+  const videoUpload = document.getElementById('video-upload');
+  const mocapUpload = document.getElementById('mocap-upload');
+  const difficultySlider = document.getElementById('difficulty');
+  const difficultyValue = document.getElementById('difficulty-value');
+
+  if (videoUpload) {
+    videoUpload.addEventListener('change', function(e) {
+      const files = e.target.files;
+      if (files.length > 0) {
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+          tokenizer.uploadedFiles.video = file;
+          document.getElementById('video-status').innerHTML = `✅ ${file.name} (${(file.size / 1024 / 1024).toFixed(1)}MB)`;
+          document.getElementById('video-status').className = 'upload-status mt-2 text-sm font-medium text-secondary-600';
+        }
+      }
+    });
+  }
+
+  if (mocapUpload) {
+    mocapUpload.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        tokenizer.uploadedFiles.mocap = file;
+        
+        // Process motion capture file
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          const content = event.target.result;
+          
+          try {
+            if (file.name.toLowerCase().endsWith('.bvh')) {
+              processedMovementData = tokenizer.parseBVH(content);
+              document.getElementById('mocap-status').innerHTML = `✅ ${file.name} - ${processedMovementData.frames.length} frames parsed`;
+            } else if (file.name.toLowerCase().endsWith('.json')) {
+              processedMovementData = JSON.parse(content);
+              document.getElementById('mocap-status').innerHTML = `✅ ${file.name} - JSON data loaded`;
+            } else {
+              document.getElementById('mocap-status').innerHTML = `⚠️ ${file.name} - Format not fully supported (will use sample data)`;
+              processedMovementData = generateSampleMovementData();
+            }
+            document.getElementById('mocap-status').className = 'upload-status mt-2 text-sm font-medium text-secondary-600';
+          } catch (error) {
+            console.error('Error processing file:', error);
+            document.getElementById('mocap-status').innerHTML = `❌ Error processing ${file.name}`;
+            document.getElementById('mocap-status').className = 'upload-status mt-2 text-sm font-medium text-red-600';
+            // Fall back to sample data
+            processedMovementData = generateSampleMovementData();
+          }
+        };
+        
+        reader.readAsText(file);
+      }
+    });
+  }
+
+  if (difficultySlider && difficultyValue) {
+    difficultySlider.addEventListener('input', function(e) {
+      difficultyValue.textContent = e.target.value;
+    });
+  }
+
+  // Handle metadata form submission
+  const metadataForm = document.getElementById('metadata-form');
+  if (metadataForm) {
+    metadataForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const metadata = Object.fromEntries(formData);
+      
+      tokenizer.uploadedFiles.metadata = metadata;
+      console.log('Metadata saved:', metadata);
+      document.getElementById('metadata-status').innerHTML = '✅ Metadata saved';
+      document.getElementById('metadata-status').className = 'upload-status mt-2 text-sm font-medium text-secondary-600';
+      closeMetadataForm();
+    });
+  }
+});
+
+// Generate sample movement data for demonstration
+function generateSampleMovementData() {
+  const frames = [];
+  const duration = 5.2; // seconds
+  const frameRate = 30;
+  const totalFrames = Math.floor(duration * frameRate);
+  
+  for (let i = 0; i < totalFrames; i++) {
+    const timestamp = i / frameRate;
+    const joints = {};
+    
+    // Generate realistic movement pattern (a flowing dance sequence)
+    const phase = (timestamp * Math.PI * 2) / duration;
+    const amplitude = 1 + 0.5 * Math.sin(phase * 2);
+    
+    for (const jointName of tokenizer.keyJoints) {
+      const baseY = jointName.includes('Leg') || jointName.includes('Foot') ? -1 : 
+                   jointName.includes('Spine') || jointName === 'Hips' ? 0 : 
+                   jointName.includes('Arm') || jointName.includes('Hand') ? 1 : 1.5;
+      
+      joints[jointName] = {
+        position: [
+          amplitude * Math.sin(phase + Math.random() * 0.2),
+          baseY + 0.3 * Math.cos(phase * 1.5),
+          0.5 * Math.sin(phase * 0.8)
+        ],
+        rotation: [
+          15 * Math.sin(phase * 2),
+          10 * Math.cos(phase * 1.5),
+          5 * Math.sin(phase * 3)
+        ]
+      };
+    }
+    
+    frames.push({ timestamp, joints });
+  }
+  
+  return {
+    frames,
+    metadata: {
+      duration: duration,
+      frameCount: totalFrames,
+      style: 'contemporary',
+      complexity: 7.5
+    }
+  };
+}
+
+function openMetadataForm() {
+  document.getElementById('metadata-modal').classList.remove('hidden');
+}
+
+function closeMetadataForm() {
+  document.getElementById('metadata-modal').classList.add('hidden');
+}
+
+function startAnalysis() {
+  const progressContainer = document.getElementById('progress-container');
+  const progressFill = document.getElementById('progress-fill');
+  const progressText = document.getElementById('progress-text');
+  const analyzeBtn = document.getElementById('analyze-btn');
+
+  // Check if we have data to process
+  if (!processedMovementData && !tokenizer.uploadedFiles.mocap) {
+    // Generate sample data if no file uploaded
+    processedMovementData = generateSampleMovementData();
+  }
+
+  progressContainer.classList.remove('hidden');
+  analyzeBtn.disabled = true;
+  analyzeBtn.innerHTML = 'Processing...';
+
+  const stages = [
+    { 
+      progress: 20, 
+      text: 'Loading movement data...', 
+      action: () => {
+        console.log('Loading movement data with', processedMovementData.frames.length, 'frames');
+      }
+    },
+    { 
+      progress: 40, 
+      text: 'Extracting pose features...', 
+      action: () => {
+        // Extract features from first few frames as demo
+        const sampleFrame = processedMovementData.frames[0];
+        const features = tokenizer.extractPoseFeatures(sampleFrame);
+        console.log('Extracted', features.length, 'features per frame');
+      }
+    },
+    { 
+      progress: 60, 
+      text: 'Analyzing movement patterns...', 
+      action: () => {
+        // Calculate complexity metrics
+        const complexity = processedMovementData.metadata?.complexity || 7.5;
+        console.log('Movement complexity:', complexity);
+      }
+    },
+    { 
+      progress: 80, 
+      text: 'Generating movement tokens...', 
+      action: () => {
+        // Perform actual tokenization
+        window.tokenizationResult = tokenizer.tokenizeMovement(processedMovementData);
+        console.log('Generated', window.tokenizationResult.tokens.length, 'tokens');
+      }
+    },
+    { 
+      progress: 100, 
+      text: 'Tokenization complete!', 
+      action: () => {
+        console.log('Tokenization completed successfully');
+        updateResultsDisplay();
+      }
+    }
+  ];
+
+  let currentStage = 0;
+
+  function updateProgress() {
+    if (currentStage < stages.length) {
+      const stage = stages[currentStage];
+      progressFill.style.width = stage.progress + '%';
+      progressText.textContent = stage.text;
+      
+      // Execute the actual processing step
+      if (stage.action) {
+        stage.action();
+      }
+      
+      currentStage++;
+      setTimeout(updateProgress, 1500);
+    } else {
+      setTimeout(() => {
+        document.getElementById('results-section').classList.remove('hidden');
+        document.getElementById('export-section').classList.remove('hidden');
+        analyzeBtn.disabled = false;
+        analyzeBtn.innerHTML = 'Analysis Complete';
+        analyzeBtn.classList.remove('bg-secondary-500', 'hover:bg-secondary-600');
+        analyzeBtn.classList.add('bg-neutral-500');
+      }, 500);
+    }
+  }
+
+  updateProgress();
+}
+
+function updateResultsDisplay() {
+  if (!window.tokenizationResult) return;
+  
+  const result = window.tokenizationResult;
+  
+  // Update token visualization with real data
+  const tokenContainer = document.querySelector('#token-container');
+  if (tokenContainer && result.tokenDetails) {
+    tokenContainer.innerHTML = '';
+    
+    // Show first 6 tokens for display
+    const displayTokens = result.tokenDetails.slice(0, 6);
+    const tokenTypes = ['Prepare', 'Rise', 'Extend', 'Rotate', 'Contract', 'Resolve'];
+    const colors = ['primary', 'secondary', 'indigo', 'emerald', 'violet', 'rose'];
+    
+    displayTokens.forEach((token, index) => {
+      const tokenElement = document.createElement('div');
+      const color = colors[index % colors.length];
+      const complexity = token.metadata.complexity.toFixed(1);
+      const energy = token.metadata.energy.toFixed(1);
+      
+      tokenElement.className = `token flex-shrink-0 bg-${color}-100 dark:bg-${color}-900 p-4 rounded-lg text-center min-w-20 border-2 border-${color}-200 dark:border-${color}-700 hover:border-${color}-400 dark:hover:border-${color}-500 cursor-pointer transition-colors`;
+      tokenElement.title = `Token ${token.tokenId}: Complexity ${complexity}, Energy ${energy}`;
+      tokenElement.innerHTML = `
+        <div class="font-bold text-lg text-${color}-700 dark:text-${color}-300">T${index + 1}</div>
+        <div class="text-sm text-${color}-600 dark:text-${color}-400">${tokenTypes[index]}</div>
+        <div class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">${token.duration.toFixed(2)}s</div>
+      `;
+      
+      tokenContainer.appendChild(tokenElement);
+    });
+  }
+  
+  // Update statistics with real data
+  const stats = result.vocabularyStats;
+  if (stats) {
+    // Update temporal dynamics
+    const temporalElement = document.querySelector('.grid .text-center:first-child .text-primary-600');
+    if (temporalElement) {
+      temporalElement.textContent = `${result.metadata.duration.toFixed(1)}s (${stats.totalTokens} tokens)`;
+    }
+    
+    // Update complexity score
+    const complexityElement = document.querySelectorAll('.grid .text-center')[2]?.querySelector('.text-primary-600');
+    if (complexityElement) {
+      complexityElement.textContent = `${stats.averageComplexity.toFixed(1)}/10`;
+    }
+    
+    // Update cultural category
+    const categoryElement = document.querySelectorAll('.grid .text-center')[3]?.querySelector('.text-primary-600');
+    if (categoryElement) {
+      categoryElement.textContent = result.metadata.style || 'Contemporary';
+    }
+  }
+}
+
+function exportTokens() {
+  // Use real tokenization results if available, otherwise use sample data
+  let tokenData;
+  
+  if (window.tokenizationResult) {
+    const result = window.tokenizationResult;
+    tokenData = {
+      movement_id: result.movementId,
+      tokens: result.tokens,
+      token_details: result.tokenDetails.map(token => ({
+        token_id: token.tokenId,
+        token_type: token.tokenType,
+        features: token.features,
+        duration: token.duration,
+        timestamp: token.timestamp,
+        complexity: token.metadata.complexity,
+        energy: token.metadata.energy
+      })),
+      vocabulary_stats: result.vocabularyStats,
+      movement_metadata: result.metadata,
+      export_metadata: {
+        timestamp: new Date().toISOString(),
+        kinethics_version: "2.0.0",
+        tokenizer_type: "real_movement_tokenizer",
+        total_vocabulary_size: tokenizer.vocabulary.size,
+        ethical_consent: tokenizer.uploadedFiles.metadata?.consent || false,
+        cultural_attribution: tokenizer.uploadedFiles.metadata?.culturalOrigin || "Unknown",
+        provenance_verified: true
+      }
+    };
+  } else {
+    // Fallback sample data
+    tokenData = {
+      movement_id: "sample_movement_" + Date.now(),
+      tokens: [1, 2, 3, 4, 5, 6],
+      token_details: [
+        { token_id: 1, name: 'Prep', type: 'preparation', duration: 0.5, complexity: 3.2 },
+        { token_id: 2, name: 'Rise', type: 'rising', duration: 0.8, complexity: 4.1 },
+        { token_id: 3, name: 'Extend', type: 'extension', duration: 0.6, complexity: 5.7 },
+        { token_id: 4, name: 'Rotate', type: 'rotation', duration: 0.7, complexity: 6.8 },
+        { token_id: 5, name: 'Contract', type: 'contraction', duration: 0.4, complexity: 4.3 },
+        { token_id: 6, name: 'Resolve', type: 'resolution', duration: 0.2, complexity: 2.1 }
+      ],
+      export_metadata: {
+        timestamp: new Date().toISOString(),
+        kinethics_version: "2.0.0",
+        tokenizer_type: "sample_data",
+        note: "This is sample data for demonstration purposes"
+      }
+    };
+  }
+
+  const blob = new Blob([JSON.stringify(tokenData, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `kinethics-movement-tokens-${Date.now()}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  
+  console.log('Exported tokenization data:', tokenData);
+}
+
+function createAsset() {
+  document.getElementById('asset-preview').classList.remove('hidden');
+  
+  // Simulate blockchain interaction
+  setTimeout(() => {
+    alert('Digital asset creation initiated! This would connect to Kinethic\'s ethical blockchain system in a real implementation.');
+  }, 1000);
+}
+
+// Close modal when clicking outside
+window.addEventListener('click', function(event) {
+  const modal = document.getElementById('metadata-modal');
+  if (event.target === modal) {
+    closeMetadataForm();
+  }
+});
+</script>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kinetic Text Editor</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📝</text></svg>">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <style>
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity 0.3s ease;
+        }
+        .fade-enter-from, .fade-leave-to {
+            opacity: 0;
+        }
+        .editor-container {
+            min-height: calc(100vh - 64px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div id="app" class="min-h-screen">
+        <!-- Header -->
+        <header class="bg-white shadow-sm border-b">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center py-4">
+                    <h1 class="text-2xl font-bold text-gray-900">Kinetic Text Editor</h1>
+                    <div class="flex space-x-4">
+                        <button @click="scanContent" 
+                                :disabled="loading"
+                                class="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white px-4 py-2 rounded-md transition-colors">
+                            {{ loading ? 'Scanning...' : 'Refresh Content' }}
+                        </button>
+                        <button @click="exportChanges"
+                                :disabled="!hasChanges"
+                                class="bg-green-600 hover:bg-green-700 disabled:bg-green-300 text-white px-4 py-2 rounded-md transition-colors">
+                            Export Changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 editor-container">
+            <!-- Loading State -->
+            <div v-if="loading" class="flex justify-center items-center h-64">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            </div>
+
+            <!-- Content Tabs -->
+            <div v-else-if="textContent" class="space-y-6">
+                <div class="border-b border-gray-200">
+                    <nav class="flex space-x-8">
+                        <button v-for="tab in tabs" :key="tab.key"
+                                @click="activeTab = tab.key"
+                                :class="activeTab === tab.key 
+                                    ? 'border-blue-500 text-blue-600' 
+                                    : 'border-transparent text-gray-500 hover:text-gray-700'"
+                                class="py-2 px-1 border-b-2 font-medium text-sm transition-colors">
+                            {{ tab.label }} 
+                            <span class="ml-1 bg-gray-100 text-gray-600 py-0.5 px-2 rounded text-xs">
+                                {{ tab.count }}
+                            </span>
+                        </button>
+                    </nav>
+                </div>
+
+                <!-- Markdown Files Tab -->
+                <div v-show="activeTab === 'markdown'" class="space-y-4">
+                    <h2 class="text-lg font-semibold text-gray-900">Markdown Content Files</h2>
+                    <div v-for="(file, filename) in textContent.markdown" :key="filename" 
+                         class="bg-white rounded-lg shadow border p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-md font-medium text-gray-900">{{ filename }}</h3>
+                            <button @click="saveMarkdownFile(filename)" 
+                                    :disabled="!fileChanged[filename]"
+                                    class="bg-green-600 hover:bg-green-700 disabled:bg-gray-300 text-white px-3 py-1 rounded text-sm">
+                                {{ fileChanged[filename] ? 'Save Changes' : 'No Changes' }}
+                            </button>
+                        </div>
+                        
+                        <!-- Title/Frontmatter -->
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Page Title</label>
+                            <input v-model="file.frontmatter.title"
+                                   @input="markFileChanged(filename)"
+                                   class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        
+                        <!-- Description if exists -->
+                        <div v-if="file.frontmatter.description" class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                            <input v-model="file.frontmatter.description"
+                                   @input="markFileChanged(filename)"
+                                   class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        
+                        <!-- Content -->
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Content</label>
+                            <textarea v-model="file.content"
+                                      @input="markFileChanged(filename)"
+                                      rows="10"
+                                      class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500 font-mono text-sm"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Configuration Tab -->
+                <div v-show="activeTab === 'config'" class="space-y-4">
+                    <h2 class="text-lg font-semibold text-gray-900">Site Configuration (hugo.yaml)</h2>
+                    <div class="bg-white rounded-lg shadow border p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-md font-medium text-gray-900">hugo.yaml</h3>
+                            <button @click="saveConfig()" 
+                                    :disabled="!configChanged"
+                                    class="bg-green-600 hover:bg-green-700 disabled:bg-gray-300 text-white px-3 py-1 rounded text-sm">
+                                {{ configChanged ? 'Save Changes' : 'No Changes' }}
+                            </button>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <!-- Site Title -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Site Title</label>
+                                <input v-model="textContent.config.data.title"
+                                       @input="configChanged = true"
+                                       class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                            
+                            <!-- Site Moto -->
+                            <div v-if="textContent.config.data.params && textContent.config.data.params.moto">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Site Moto</label>
+                                <input v-model="textContent.config.data.params.moto"
+                                       @input="configChanged = true"
+                                       class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                            
+                            <!-- Site Description -->
+                            <div v-if="textContent.config.data.params && textContent.config.data.params.description">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Site Description</label>
+                                <textarea v-model="textContent.config.data.params.description"
+                                          @input="configChanged = true"
+                                          rows="3"
+                                          class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                            </div>
+                        </div>
+                        
+                        <!-- All Configuration Texts -->
+                        <div class="mt-6">
+                            <h4 class="text-sm font-medium text-gray-700 mb-3">All Configuration Texts</h4>
+                            <div class="space-y-3 max-h-96 overflow-y-auto">
+                                <div v-for="(textItem, index) in textContent.config.extractedTexts" :key="index"
+                                     class="border border-gray-200 rounded p-3">
+                                    <div class="text-xs text-gray-500 mb-1">{{ textItem.path }}</div>
+                                    <textarea v-model="textItem.value"
+                                              @input="configChanged = true"
+                                              rows="2"
+                                              class="w-full border border-gray-300 rounded px-2 py-1 text-sm focus:ring-blue-500 focus:border-blue-500"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Templates Tab -->
+                <div v-show="activeTab === 'templates'" class="space-y-4">
+                    <h2 class="text-lg font-semibold text-gray-900">HTML Template Files</h2>
+                    <div v-for="(template, filename) in textContent.templates" :key="filename" 
+                         class="bg-white rounded-lg shadow border p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-md font-medium text-gray-900">{{ filename }}</h3>
+                            <button @click="saveTemplate(filename)" 
+                                    :disabled="!templateChanged[filename]"
+                                    class="bg-green-600 hover:bg-green-700 disabled:bg-gray-300 text-white px-3 py-1 rounded text-sm">
+                                {{ templateChanged[filename] ? 'Save Changes' : 'No Changes' }}
+                            </button>
+                        </div>
+                        
+                        <!-- Extracted Texts -->
+                        <div v-if="template.extractedTexts.length > 0" class="mb-4">
+                            <h4 class="text-sm font-medium text-gray-700 mb-3">Extracted Texts</h4>
+                            <div class="space-y-2 max-h-40 overflow-y-auto">
+                                <div v-for="(textItem, index) in template.extractedTexts" :key="index"
+                                     class="flex items-center space-x-2">
+                                    <input v-model="textItem.text"
+                                           @input="markTemplateChanged(filename)"
+                                           class="flex-1 border border-gray-300 rounded px-2 py-1 text-sm focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Full Template Content -->
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Full Template Content</label>
+                            <textarea v-model="template.content"
+                                      @input="markTemplateChanged(filename)"
+                                      rows="20"
+                                      class="w-full border border-gray-300 rounded-md px-3 py-2 font-mono text-xs focus:ring-blue-500 focus:border-blue-500"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error State -->
+            <div v-else-if="error" class="text-red-600 text-center py-8">
+                <p>Error: {{ error }}</p>
+                <button @click="scanContent" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded-md">
+                    Try Again
+                </button>
+            </div>
+
+            <!-- Empty State -->
+            <div v-else class="text-center py-8">
+                <p class="text-gray-500 mb-4">Click "Refresh Content" to scan for text content.</p>
+                <button @click="scanContent" class="bg-blue-600 text-white px-4 py-2 rounded-md">
+                    Start Scanning
+                </button>
+            </div>
+        </div>
+
+        <!-- Toast Notifications -->
+        <div v-if="toast.show" 
+             :class="toast.type === 'success' ? 'bg-green-500' : 'bg-red-500'"
+             class="fixed bottom-4 right-4 text-white px-6 py-3 rounded-lg shadow-lg transition-all">
+            {{ toast.message }}
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
