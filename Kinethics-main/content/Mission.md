@@ -1,7 +1,7 @@
 ---
 title: MISSION
 date: '2021-12-18T03:10:36.000Z'
-draft: false
+draft: true
 language: en
 description: null
 featured_image: ../static/images/Post1/dancer_landscape.png

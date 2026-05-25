@@ -1,5 +1,5 @@
 baseURL: 'https://kinethic.ai/'
-title: KINETHIC
+title: KINETIC TOKENIZATION
 languageCode: en-us
 theme: tailbliss
 DefaultContentLanguage: en
@@ -52,7 +52,7 @@ params:
   authorimage: 
   og_image: 
   moto: "Intelligence begins with Ethical\u00a0Motion"
-  description: "Kinethic embeds provenance, royalties, and compliance into motion data turning movement into an ethical core of tomorrow’s AI."
+  description: "Transform human movement into ethical, traceable digital assets with embedded provenance, consent tracking, and royalty distribution through blockchain tokenization."
   disable_theme_toggle: false
   newsletter_signup: true
 
@@ -62,60 +62,54 @@ params:
 
 
   p1:
-    heading: "What, Why, How ?"
-    # image: "images/homepage/dancer.png"
+    heading: "Blockchain Motion Tokenization"
     content:
-      - text: "Every movement is knowledge. Every gesture is labor."
-      - text: "Yet today, motion data captured across gaming, robotics, film, and health is extracted, anonymized, and monetized without consent or royalties. Kinethic exists to change this. We build the tools and frameworks that turn movement into an ethical, traceable, and revenue-bearing asset. Through blockchain tokenization, smart contracts, and AI model research, we ensure that performers retain authorship and share in the value their motion generates."
-      - text: "Read more about Motion Research →"
+      - text: "Transform human movement into ethical digital assets through blockchain technology."
+      - text: "Our tokenization platform converts motion capture data into smart contracts with embedded provenance, consent tracking, and automated royalty distribution. Each movement becomes a verified digital asset with immutable ownership records and fair compensation mechanisms."
+      - text: "Experience the Interactive Tokenization Interface →"
 
   pimage1:
     image: "/images/homepage/longwidth2.png"
 
 
   p2:
-    heading: "Markets - for whom?"
-    
+    heading: "Tokenization Applications"
     content:
-      - text: "From indie game developers to robotics labs, fitness and health tech, and cultural heritage institutions, Kinethic connects the diverse fields that work with human motion."
-      - link: "Read more about Market →"
+      - text: "Gaming studios, robotics researchers, healthcare institutions, and cultural preservationists can access ethical motion datasets with guaranteed performer attribution and compensation through our blockchain tokenization system."
+      - link: "Explore Tokenization Use Cases →"
  
   p3:
-    heading: "Current Research: Blockchain/Tokenization"
-    # image: "../assets/images/Post1/dancer_landscape.png"
+    heading: "Smart Contract Integration"
     content:
-      - text: "We are developing a tokenization software protocol that links performer motion to blockchain identifiers. Each dataset becomes a smart asset: secured, traceable, and royalty-enabled across industries."
-      - link: "Learn more about Tokenization 🡪"
+      - text: "Every tokenized motion dataset includes smart contracts for automatic royalty distribution, consent verification, and cross-platform licensing management on Ethereum-compatible networks."
+      - link: "View Smart Contract Documentation 🡪"
     
   p4:
-    heading: "AI Model Research Concept"
-    # image: "../assets/images/Post1/dancer_landscape.png"
+    heading: "Decentralized Storage & Privacy"
     content:
-      - text: "Our long-term vision is an ethical motion AI model, trained only on consented, provenance-secured datasets. It will classify, predict, and generate movement while embedding attribution and royalties at its core."
-      - link: "Read more about the AI Model 🡪"
+      - text: "Motion data is stored on IPFS with zero-knowledge proofs protecting sensitive cultural information while maintaining full provenance chains and creator attribution."
+      - link: "Learn about Privacy Features 🡪"
 
   p5:
-    heading: "Ethical Motion Archive"
-    # image: "../assets/images/Post1/dancer_landscape.png"
+    heading: "Supported Data Formats"
     content:
-      - text: "We are building an Ethical Motion Archive, a living repository for motion data governed by transparency, performer consent, and fair redistribution of value."
-      - link: "Explore the Archive 🡪"
+      - text: "Upload BVH, C3D, JSON motion capture files, or MP4/MOV videos. Our analysis engine extracts pose features and temporal sequences for comprehensive movement tokenization."
+      - link: "View Format Specifications 🡪"
 
   p6:
-    heading: "Ongoing Ethics Research"
-    # image: "../assets/images/Post1/dancer_landscape.png"
+    heading: "Cultural Sensitivity Framework"
     content:
-      - text: "Kinethic collaborates with scholars, artists, and professionals to define ethical frameworks for motion data, choreography, and AI, aligning with the EU AI Act and global creative-tech policy."
-      - link: "Read more about Ethics Research 🡪"
+      - text: "Our tokenization system includes specialized protocols for traditional and indigenous movements, ensuring respectful handling of cultural heritage with community consent and benefit-sharing."
+      - link: "View Cultural Guidelines 🡪"
       
 
 
   PS:
-    heading: "Backed by world-renowned investors"
+    heading: "Blockchain Technology Partners"
     content:
-      - text: "Sagittis scelerisque nulla cursus in enim consectetur quam. Dictum urna sed consectetur neque tristique pellentesque. Blandit amet, sed aenean erat arcu morbi. Cursus faucibus nunc nisl netus morbi vel porttitor vitae ut. Amet vitae fames senectus vitae."
+      - text: "Our tokenization platform integrates with leading blockchain networks, IPFS storage providers, and smart contract auditing services to ensure secure, scalable motion data tokenization."
     links:
-      - text: Meet our investors and advisors
+      - text: View our technology partners
         url: "#"
     logos:
       - identifier: a
@@ -129,9 +123,9 @@ params:
 
   
   pblog:
-    heading: "Our publications"
+    heading: "Tokenization Research"
     content:
-      - text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa libero labore natus atque, ducimus sed."
+      - text: "Technical documentation, smart contract specifications, and research papers on ethical motion data tokenization and blockchain integration."
 
   # p5:
   #   heading: "Stay Up to Date"
@@ -159,22 +153,10 @@ params:
 
 menu:
   main:
-    - identifier: Mission
-      name: Mission
-      url: /Mission/
+    - identifier: tokenization
+      name: Tokenization Interface
+      url: /tokenization/
       weight: 10
-    - identifier: Research
-      name: Research
-      url: /Research/
-      weight: 20
-    - identifier: Networks
-      name: Networks
-      url: /Networks/
-      weight: 30
-    - identifier: solutions
-      name: Solutions
-      pre: dropdown
-      weight: 40
     # - identifier: Networks
     #   pre: dropdown
     #   name: Categories
@@ -196,15 +178,6 @@ menu:
   #     name: About
   #     url: /about/
   #     weight: 20
-  solutions:
-    - identifier: solutions-overview
-      name: Solutions Overview
-      url: /Solutions/
-      weight: 10
-    - identifier: tokenization
-      name: Tokenization
-      url: /tokenization/
-      weight: 20
   dropdown:
     - identifier: appearance
       pre: stars # can be stars, comments or piechart
@@ -225,26 +198,10 @@ menu:
       url: "#"
       weight: 30
   footer:
-    - identifier: about
-      name: About
-      url: /about/
+    - identifier: tokenization
+      name: Tokenization
+      url: /tokenization/
       weight: 10
-    - identifier: blog
-      name: Blog
-      url: /categories/blog/
-      weight: 20
-    - identifier: news
-      name: News
-      url: /categories/news/
-      weight: 30
-    - identifier: Mission
-      name: Mission
-      url: /Mission/
-      weight: 40
-    - identifier: contact
-      name: Contact
-      url: /contact/
-      weight: 50
 
 
 taxonomies:
