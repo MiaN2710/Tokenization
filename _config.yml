@@ -1,0 +1,26 @@
+# GitHub Pages configuration for Kinetic Tokenization Platform
+title: Kinetic Tokenization Platform
+description: Blockchain-based motion data tokenization platform with smart contracts and IPFS storage
+url: "https://minhnguyen.github.io"
+baseurl: "/kinetic"
+
+# Enable GitHub Pages processing
+plugins:
+  - jekyll-relative-links
+
+# Exclude Hugo source files from Jekyll processing
+exclude:
+  - Kinethics-main/
+  - text-editor/
+  - node_modules/
+  - package*.json
+  - README.md
+
+# Include the built Hugo site
+include:
+  - Kinethics-main/public/
+
+# Redirect handling
+relative_links:
+  enabled: true
+  collections: false
