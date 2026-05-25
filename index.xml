@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>KINETHIC</title>
+    <link>http://localhost:1313/</link>
+    <description>Recent content on KINETHIC</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 18 May 2022 11:10:36 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>News Post 1</title>
+      <link>http://localhost:1313/posts/news-post-1/</link>
+      <pubDate>Wed, 18 May 2022 11:10:36 +0800</pubDate>
+      <guid>http://localhost:1313/posts/news-post-1/</guid>
+      <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed cursus, odio nec venenatis lacinia, lacus lectus varius nisi, in tristique mi purus ut libero.</description>
+    </item>
+    <item>
+      <title>News Post 2</title>
+      <link>http://localhost:1313/posts/news-post-2/</link>
+      <pubDate>Mon, 18 Apr 2022 11:10:36 +0800</pubDate>
+      <guid>http://localhost:1313/posts/news-post-2/</guid>
+      <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed cursus, odio nec venenatis lacinia, lacus lectus varius nisi, in tristique mi purus ut libero.</description>
+    </item>
+    <item>
+      <title>News Post 3</title>
+      <link>http://localhost:1313/posts/news-post-3/</link>
+      <pubDate>Mon, 18 Apr 2022 11:10:36 +0800</pubDate>
+      <guid>http://localhost:1313/posts/news-post-3/</guid>
+      <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed cursus, odio nec venenatis lacinia, lacus lectus varius nisi, in tristique mi purus ut libero.</description>
+    </item>
+    <item>
+      <title>About</title>
+      <link>http://localhost:1313/about/</link>
+      <pubDate>Sat, 18 Dec 2021 11:10:36 +0800</pubDate>
+      <guid>http://localhost:1313/about/</guid>
+      <description>&lt;h1 id=&#34;h1-heading-blush&#34;&gt;h1 Heading &amp;#x1f60a;&lt;/h1&gt;&#xA;&lt;h2 id=&#34;h2-heading&#34;&gt;h2 Heading&lt;/h2&gt;&#xA;&lt;h3 id=&#34;h3-heading&#34;&gt;h3 Heading&lt;/h3&gt;&#xA;&lt;h4 id=&#34;h4-heading&#34;&gt;h4 Heading&lt;/h4&gt;&#xA;&lt;h5 id=&#34;h5-heading&#34;&gt;h5 Heading&lt;/h5&gt;&#xA;&lt;h6 id=&#34;h6-heading&#34;&gt;h6 Heading&lt;/h6&gt;&#xA;&lt;h2 id=&#34;horizontal-rules&#34;&gt;Horizontal Rules&lt;/h2&gt;&#xA;&lt;hr&gt;&#xA;&lt;hr&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;typographic-replacements&#34;&gt;Typographic replacements&lt;/h2&gt;&#xA;&lt;p&gt;Enable typographer option to see result.&lt;/p&gt;&#xA;&lt;p&gt;(c) (C) (r) (R) (tm) (TM) (p) (P) +-&lt;/p&gt;&#xA;&lt;p&gt;test.. test&amp;hellip; test&amp;hellip;.. test?&amp;hellip;.. test!&amp;hellip;.&lt;/p&gt;&#xA;&lt;p&gt;!!!!!! ???? ,,  &amp;ndash; &amp;mdash;&lt;/p&gt;&#xA;&lt;p&gt;&amp;ldquo;Smartypants, double quotes&amp;rdquo; and &amp;lsquo;single quotes&amp;rsquo;&lt;/p&gt;&#xA;&lt;h2 id=&#34;emphasis&#34;&gt;Emphasis&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;This is bold text&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;This is bold text&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;em&gt;This is italic text&lt;/em&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;em&gt;This is italic text&lt;/em&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;del&gt;Strikethrough&lt;/del&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;blockquotes&#34;&gt;Blockquotes&lt;/h2&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;Blockquotes can also be nested&amp;hellip;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Contact</title>
+      <link>http://localhost:1313/contact/</link>
+      <pubDate>Sat, 18 Dec 2021 03:10:36 +0000</pubDate>
+      <guid>http://localhost:1313/contact/</guid>
+      <description>&lt;!-- @format --&gt;&#xA;&lt;section class=&#34;lg:pb-24&#34;&gt;&#xA;  &lt;div class=&#34;max-w-screen-md px-4 mx-auto&#34;&gt;&#xA;      &lt;p class=&#34;mb-8 font-light text-center text-gray-500 lg:mb-16 dark:text-gray-400 sm:text-xl&#34;&gt;Got a technical issue? Want to send feedback about a beta feature? Need details about our Business plan? Let us know.&lt;/p&gt;&#xA;      &lt;form name=&#34;contact&#34; action=&#34;https://formsubmit.co/your@email.com&#34; method=&#34;POST&#34; class=&#34;space-y-8&#34;&gt;&#xA;          &lt;div class=&#34;my-4&#34;&gt;&#xA;              &lt;label for=&#34;email&#34; class=&#34;block mb-2 font-medium text-gray-900 text-md dark:text-gray-300&#34;&gt;&lt;strong&gt;Your Email:&lt;/strong&gt;&lt;/label&gt;&#xA;              &lt;input type=&#34;email&#34; name=&#34;email&#34; class=&#34;shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500 dark:shadow-sm-light&#34; placeholder=&#34;name@example.com&#34; required&gt;&#xA;          &lt;/div&gt;&#xA;          &lt;div class=&#34;my-4&#34;&gt;&#xA;              &lt;label for=&#34;subject&#34; class=&#34;block mb-2 font-medium text-gray-900 text-md dark:text-gray-300&#34;&gt;&lt;strong&gt;Subject:&lt;/strong&gt;&lt;/label&gt;&#xA;              &lt;input type=&#34;text&#34; name=&#34;subject&#34; class=&#34;block w-full p-3 text-gray-900 border border-gray-300 rounded-lg shadow-sm text-md bg-gray-50 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500 dark:shadow-sm-light&#34; placeholder=&#34;Let us know how we can help you&#34; required&gt;&#xA;          &lt;/div&gt;&#xA;          &lt;div class=&#34;my-4 sm:col-span-2&#34;&gt;&#xA;              &lt;label for=&#34;message&#34; class=&#34;block mb-2 font-medium text-gray-900 text-md dark:text-gray-400&#34;&gt;&lt;strong&gt;Your message:&lt;/strong&gt;&lt;/label&gt;&#xA;              &lt;textarea id=&#34;message&#34; name=&#34;message&#34; rows=&#34;6&#34; class=&#34;block p-2.5 w-full text-md text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500&#34; placeholder=&#34;Leave a comment...&#34;&gt;&lt;/textarea&gt;&#xA;          &lt;/div&gt;&#xA;          &lt;div class=&#34;mt-6 lg:pb-16&#34;&gt;&#xA;             &lt;button type=&#34;submit&#34; class=&#34;px-5 py-3 font-bold text-center text-white bg-indigo-600 rounded-lg text-md sm:w-fit hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800&#34;&gt;Send Message&lt;/button&gt;&#xA;          &lt;/div&gt;&#xA;      &lt;/form&gt;&#xA;  &lt;/div&gt;&#xA;&lt;/section&gt;</description>
+    </item>
+    <item>
+      <title>Interactive Tokenization Interface</title>
+      <link>http://localhost:1313/tokenization/</link>
+      <pubDate>Sat, 18 Dec 2021 11:10:36 +0800</pubDate>
+      <guid>http://localhost:1313/tokenization/</guid>
+      <description>&lt;h1 id=&#34;interactive-tokenization-interface&#34;&gt;Interactive Tokenization Interface&lt;/h1&gt;&#xA;&lt;p&gt;Experience our core tokenization pipeline through this interactive demonstration. Upload movement data, analyze motion patterns, and generate blockchain-ready tokens with full provenance tracking. This tool showcases how performers can transform their movements into protected digital assets with embedded authorship and royalty mechanisms.&lt;/p&gt;&#xA;&lt;p&gt;This interface demonstrates the complete Kinethic process: from raw movement data to ethical digital assets with embedded provenance, consent tracking, and royalty distribution.&lt;/p&gt;&#xA;&lt;div id=&#34;tokenization-interface&#34; class=&#34;my-12 p-8 bg-neutral-50 dark:bg-zinc-800 rounded-lg shadow-lg&#34;&gt;&#xA;  &lt;div class=&#34;max-w-6xl mx-auto&#34;&gt;&#xA;    &#xA;    &lt;div class=&#34;mb-12&#34;&gt;&#xA;      &lt;h3 class=&#34;text-2xl font-bold mb-6 text-zinc-900 dark:text-white font-[&#39;DM_Sans&#39;]&#34;&gt;1. Upload Movement Data&lt;/h3&gt;&#xA;      &lt;div class=&#34;grid grid-cols-1 md:grid-cols-3 gap-6&#34;&gt;&#xA;        &lt;div class=&#34;upload-box bg-white dark:bg-zinc-700 p-6 rounded-lg border-2 border-dashed border-neutral-300 dark:border-zinc-600 hover:border-primary-400 dark:hover:border-primary-500 transition-colors cursor-pointer&#34; data-type=&#34;video&#34;&gt;&#xA;          &lt;div class=&#34;text-center&#34;&gt;&#xA;            &lt;div class=&#34;text-4xl mb-4&#34;&gt;🎥&lt;/div&gt;&#xA;            &lt;h4 class=&#34;text-lg font-semibold mb-2 text-zinc-900 dark:text-white font-[&#39;DM_Sans&#39;]&#34;&gt;Video Upload&lt;/h4&gt;&#xA;            &lt;p class=&#34;text-sm text-zinc-600 dark:text-zinc-300 mb-4 font-[&#39;Lora&#39;]&#34;&gt;Upload dance video (.mp4, .mov, .avi)&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>MISSION</title>
+      <link>http://localhost:1313/mission/</link>
+      <pubDate>Sat, 18 Dec 2021 03:10:36 +0000</pubDate>
+      <guid>http://localhost:1313/mission/</guid>
+      <description>&lt;h2 id=&#34;mission-statement&#34;&gt;Mission Statement&lt;/h2&gt;&#xA;&lt;p&gt;At Kinethic, we do believe that motion is more than physical movement. Motion is knowledge, labor, identity and expression captured in time and space. In an era where human motion is increasingly captured, analyzed, synthesized and monetized across gaming, robotics, film, health and performance-tech, we assert that every gesture carries rights and value. Our mission is to transform motion into a protected asset: one that is traceable, royalty-bearing, ethically governed and embedded in the infrastructure of intelligent systems. We embed provenance, royalties and compliance directly into motion files ensuring that when movement becomes data, the origin, authorship, consent and value-chain remain transparent. By doing so, we enable new value streams for industries that build on embodied intelligence, while safeguarding the rights of the performers, creators and bodies whose movement powers AI, robotics and other technologies. We work at the intersection of motion capture, blockchain tokenization, smart contracts and AI-model research to build infrastructures that uphold the dignity of performers and the integrity of embodied data. Our approach is grounded in fairness, transparency and collaboration. We partner with artists, tech innovators, researchers and institutions to define the next generation of motion economies. By operating with an ethic of consent and author-ownership, we envision a future where motion is not simply extracted, anonymized and monetized without recognition but is acknowledged as the medium of authorship it truly is. We seek to shift the paradigm: from passive extraction of motion data to active participation by the motion-source in value creation. Our goal is a world in which motion-driven AI, robotics and creative systems do not rely on exploitative supply chains, but instead rest on infrastructures of trust, attribution and shared value. Intelligence begins with ethical motion. And in that spirit, we commit to building tools, protocols and frameworks that embed ethical motion into the future of embodied intelligence.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Networks</title>
+      <link>http://localhost:1313/networks/</link>
+      <pubDate>Sat, 18 Dec 2021 11:10:36 +0800</pubDate>
+      <guid>http://localhost:1313/networks/</guid>
+      <description>&lt;h2 id=&#34;team-member-short-bios-email&#34;&gt;Team member short bios, email.&lt;/h2&gt;&#xA;&lt;p&gt;Insert text here&lt;/p&gt;&#xA;&lt;h2 id=&#34;funding-partners&#34;&gt;Funding Partners&lt;/h2&gt;&#xA;&lt;p&gt;insert text here&lt;/p&gt;&#xA;&lt;h2 id=&#34;collaborators&#34;&gt;Collaborators&lt;/h2&gt;&#xA;&lt;p&gt;insert text here&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Research</title>
+      <link>http://localhost:1313/research/</link>
+      <pubDate>Sat, 18 Dec 2021 11:10:36 +0800</pubDate>
+      <guid>http://localhost:1313/research/</guid>
+      <description>&lt;h2 id=&#34;motion-research&#34;&gt;Motion Research&lt;/h2&gt;&#xA;&lt;p&gt;Kinethic investigates motion as data, authorship, and embodied knowledge. Our research explores how human movement, captured through dance, gesture, sport, or daily activity, can be encoded without losing its origin or context. We work with choreographers, performers, and researchers to understand how bodies generate meaning rather than mere metrics. Motion data is treated as a living record that is expressive, ethical, and relational. By analyzing movement across artistic, technological, and social domains, we aim to create frameworks where every recorded motion carries provenance, consent, and cultural specificity. In this way, motion capture becomes a regenerative form of knowledge rather than an extractive process.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Solutions</title>
+      <link>http://localhost:1313/solutions/</link>
+      <pubDate>Sat, 18 Dec 2021 11:10:36 +0800</pubDate>
+      <guid>http://localhost:1313/solutions/</guid>
+      <description>&lt;h2 id=&#34;overall-solutions-and-tools-for-diverse-markets&#34;&gt;Overall Solutions and Tools for Diverse Markets&lt;/h2&gt;&#xA;&lt;p&gt;Kinethic develops an integrated ecosystem that transforms motion into a protected and transparent digital asset. Our solutions connect the full lifecycle of motion data, from capture and tokenization to archiving and ethical AI generation. Each component ensures that performers retain authorship, provenance, and royalties, while industries gain access to verified, consent-based data. Together these tools form a foundation for new markets in gaming, robotics, health, and culture. The Kinethic system is not a single product but an evolving infrastructure for a fair and traceable motion economy grounded in ethics, collaboration, and technological innovation.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
