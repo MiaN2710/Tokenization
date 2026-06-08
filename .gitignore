@@ -1,0 +1,14 @@
+# Hugo source files - not needed for GitHub Pages deployment
+Kinethics-main/
+text-editor/
+
+# Jekyll files - we're using static HTML instead
+_config.yml
+
+# System files
+.DS_Store
+*.log
+
+# Temporary files
+*.tmp
+*.temp
