@@ -1,0 +1,77 @@
+# Advanced Build and Deploy Workflow for Kinetic Tokenization
+name: Build and Deploy App
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js (if needed for future builds)
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: '**/package-lock.json'
+    
+    # Skip npm install since we have static files only
+    # - name: Install dependencies
+    #   run: npm ci
+    
+    # Skip build step since we have pre-built static files
+    # - name: Build application
+    #   run: npm run build
+    
+    - name: Verify tokenization interface
+      run: |
+        echo "Checking tokenization interface files..."
+        ls -la tokenization/
+        if [ -f "tokenization/index.html" ]; then
+          echo "✅ Tokenization interface found"
+        else
+          echo "❌ Tokenization interface missing"
+          exit 1
+        fi
+        
+    - name: Setup Pages
+      uses: actions/configure-pages@v4
+      
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: '.'
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    
+    steps:
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
+      
+    - name: Output deployment URL
+      run: |
+        echo "🚀 Tokenization platform deployed to: ${{ steps.deployment.outputs.page_url }}"
+        echo "📱 Direct interface: ${{ steps.deployment.outputs.page_url }}tokenization/"
