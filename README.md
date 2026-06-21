@@ -2,6 +2,8 @@
 
 **"Intelligence begins with Ethical Motion"**
 
+🔥 **Live Demo**: https://mian2710.github.io/Tokenization/tokenization/
+
 A blockchain-based tokenization platform for motion data that transforms human movement into ethical, traceable digital assets with embedded provenance, consent tracking, and royalty distribution.
 
 ## 🎯 Overview
