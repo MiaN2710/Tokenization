@@ -1,15 +1,45 @@
-<!doctype html><html lang=en><head><meta http-equiv=Content-Type content="text/html" charset=UTF-8><meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1"><meta name=viewport content="width=device-width,initial-scale=1"><link rel=apple-touch-icon sizes=180x180 href=/Tokenization/favicon/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/Tokenization/favicon/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/Tokenization/favicon/favicon-16x16.png><link rel=manifest href=/Tokenization/favicon/site.webmanifest><link rel=mask-icon href=/Tokenization/favicon/safari-pinned-tab.svg color=#5bbad5><meta name=msapplication-TileColor content="#da532c"><meta name=theme-color content="#ffffff"><title itemprop=name>Interactive Tokenization Interface | KINETIC TOKENIZATION</title><meta name=description content="Experience Kinethic's tokenization pipeline through this interactive demonstration. Upload movement data, analyze motion patterns, and generate blockchain-ready tokens with full provenance tracking."><meta property="og:title" content="Interactive Tokenization Interface | KINETIC TOKENIZATION"><meta name=twitter:title content="Interactive Tokenization Interface | KINETIC TOKENIZATION"><meta itemprop=name content="Interactive Tokenization Interface | KINETIC TOKENIZATION"><meta name=application-name content="Interactive Tokenization Interface | KINETIC TOKENIZATION"><meta property="og:description" content="Experience Kinethic's tokenization pipeline through this interactive demonstration. Upload movement data, analyze motion patterns, and generate blockchain-ready tokens with full provenance tracking."><meta property="og:site_name" content="KINETIC TOKENIZATION"><meta property="og:url" content="https://mian2710.github.io/Tokenization/tokenization/"><meta property="og:locale" content="en"><meta property="og:image" content="/Tokenization/assets/images/pages/Research/longwidth.png"><meta property="og:image:secure_url" content="https://mian2710.github.io/Tokenization/assets/images/pages/Research/longwidth.png"><meta property="og:type" content="article"><link href=//cdn.jsdelivr.net rel=dns-prefetch><link href=https://cdn.jsdelivr.net rel=preconnect crossorigin=anonymous><link href=https://static.cloudflareinsights.com rel=preconnect rel=dns-prefetch><link href=https://static.cloudflareinsights.com crossorigin=anonymous rel=preconnect><link href=/Tokenization/images/logos/Kinethic-logo.svg rel=preload as=image fetchpriority=high loading=eager><link href=https://cdn.jsdelivr.net/npm/alpinejs@3.14.9/dist/cdn.min.js as=script rel=preconnect rel=dns-prefetch><style>[x-cloak]{display:none!important}</style><script>document.documentElement.classList.remove("dark")</script><link rel=stylesheet href=/Tokenization/css/main.rYaN9-rK.css>
+<!doctype html><html lang=en><head><meta http-equiv=Content-Type content="text/html" charset=UTF-8><meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1"><meta name=viewport content="width=device-width,initial-scale=1"><link rel=apple-touch-icon sizes=180x180 href=/Tokenization/favicon/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/Tokenization/favicon/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/Tokenization/favicon/favicon-16x16.png><link rel=manifest href=/Tokenization/favicon/site.webmanifest><link rel=mask-icon href=/Tokenization/favicon/safari-pinned-tab.svg color=#5bbad5><meta name=msapplication-TileColor content="#da532c"><meta name=theme-color content="#ffffff"><title itemprop=name>Interactive Tokenization Interface | KINETIC TOKENIZATION</title><meta name=description content="Experience Kinethic's tokenization pipeline through this interactive demonstration. Upload movement data, analyze motion patterns, and generate blockchain-ready tokens with full provenance tracking."><meta property="og:title" content="Interactive Tokenization Interface | KINETIC TOKENIZATION"><meta name=twitter:title content="Interactive Tokenization Interface | KINETIC TOKENIZATION"><meta itemprop=name content="Interactive Tokenization Interface | KINETIC TOKENIZATION"><meta name=application-name content="Interactive Tokenization Interface | KINETIC TOKENIZATION"><meta property="og:description" content="Experience Kinethic's tokenization pipeline through this interactive demonstration. Upload movement data, analyze motion patterns, and generate blockchain-ready tokens with full provenance tracking."><meta property="og:site_name" content="KINETIC TOKENIZATION"><meta property="og:url" content="https://mian2710.github.io/Tokenization/tokenization/"><meta property="og:locale" content="en"><meta property="og:image" content="/Tokenization/assets/images/pages/Research/longwidth.png"><meta property="og:image:secure_url" content="https://mian2710.github.io/Tokenization/assets/images/pages/Research/longwidth.png"><meta property="og:type" content="article"><link href=//cdn.jsdelivr.net rel=dns-prefetch><link href=https://cdn.jsdelivr.net rel=preconnect crossorigin=anonymous><link href=https://static.cloudflareinsights.com rel=preconnect rel=dns-prefetch><link href=https://static.cloudflareinsights.com crossorigin=anonymous rel=preconnect><link href=/Tokenization/images/logos/Kinethic-logo.svg rel=preload as=image fetchpriority=high loading=eager><link href=https://cdn.jsdelivr.net/npm/alpinejs@3.14.9/dist/cdn.min.js as=script rel=preconnect rel=dns-prefetch><style>[x-cloak]{display:none!important}</style><script>
+// Force light mode and prevent dark mode
+document.documentElement.classList.remove("dark");
+document.body.classList.remove("dark");
+// Ensure the page is always in light mode
+document.documentElement.classList.add("light");
+</script><link rel=stylesheet href=/Tokenization/css/main.rYaN9-rK.css>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-/* Fallback styling to ensure proper appearance */
-.bg-neutral { background-color: #404040; }
-.bg-primary-500 { background-color: #3b82f6; }
-.bg-secondary-500 { background-color: #8b5cf6; }
-.text-primary-600 { color: #2563eb; }
-.hover\:bg-primary-600:hover { background-color: #2563eb; }
-.border-primary-400 { border-color: #60a5fa; }
-.upload-box:hover { transform: translateY(-2px); transition: all 0.3s ease; }
-</style></head><body class="bg-gray-50 dark:bg-gray-950"><div class="top-0 z-50 w-full bg-gray-200 bg-neutral md:sticky"><div x-data="{ open: false }" class="flex flex-col px-4 mx-auto max-w-full md:items-center md:justify-between md:flex-row md:px-6 lg:px-8"><div class="flex flex-row justify-between items-center p-4"><a href=/Tokenization/ class="flex text-gray-100 transition duration-1000 ease-in-out group"><img src=/Tokenization/images/logos/Kinethic-logo.svg class="w-9 h-9 transition-opacity group-hover:opacity-50 group-focus:opacity-70" alt="KINETIC TOKENIZATION Logo" style=width:150px;height:50px><div class="mt-1 ml-3 text-xl font-black tracking-tight text-gray-100 uppercase transition-colors group-hover:text-gray-400/60"></div></a><button class="rounded-lg md:hidden focus:outline-none focus:shadow-outline" @click="open = !open" role=button :aria-expanded=open aria-label="Toggle navigation menu" aria-controls=menuItems>
+/* Force light mode and prevent dark theme */
+html, body { 
+  background-color: #f9fafb !important; 
+  color: #111827 !important; 
+}
+
+/* Override dark mode styles */
+.bg-neutral { background-color: #f5f5f5 !important; }
+.bg-primary-500 { background-color: #3b82f6 !important; }
+.bg-secondary-500 { background-color: #8b5cf6 !important; }
+.text-primary-600 { color: #2563eb !important; }
+.hover\:bg-primary-600:hover { background-color: #2563eb !important; }
+.border-primary-400 { border-color: #60a5fa !important; }
+
+/* Ensure light background for main sections */
+.bg-neutral-50 { background-color: #fafafa !important; }
+.bg-white { background-color: #ffffff !important; }
+.text-zinc-900 { color: #18181b !important; }
+.text-zinc-600 { color: #52525b !important; }
+
+/* Upload box styling */
+.upload-box { 
+  background-color: #ffffff !important;
+  border: 2px dashed #d1d5db !important;
+  transform: translateY(0);
+  transition: all 0.3s ease;
+}
+.upload-box:hover { 
+  transform: translateY(-2px); 
+  border-color: #60a5fa !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+</style></head><body class="bg-gray-50"><div class="top-0 z-50 w-full bg-gray-200 bg-neutral md:sticky"><div x-data="{ open: false }" class="flex flex-col px-4 mx-auto max-w-full md:items-center md:justify-between md:flex-row md:px-6 lg:px-8"><div class="flex flex-row justify-between items-center p-4"><a href=/Tokenization/ class="flex text-gray-100 transition duration-1000 ease-in-out group"><img src=/Tokenization/images/logos/Kinethic-logo.svg class="w-9 h-9 transition-opacity group-hover:opacity-50 group-focus:opacity-70" alt="KINETIC TOKENIZATION Logo" style=width:150px;height:50px><div class="mt-1 ml-3 text-xl font-black tracking-tight text-gray-100 uppercase transition-colors group-hover:text-gray-400/60"></div></a><button class="rounded-lg md:hidden focus:outline-none focus:shadow-outline" @click="open = !open" role=button :aria-expanded=open aria-label="Toggle navigation menu" aria-controls=menuItems>
 <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6"><path x-show="!open" fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4A1 1 0 013 5zm0 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm6 5a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z" clip-rule="evenodd"/><path x-show="open" fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414.0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg></button></div><nav id=menuItems x-cloak :class="{'flex': open, 'hidden': !open}" class="hidden flex-col flex-grow pb-4 md:pb-0 md:flex md:justify-end md:flex-row"><a class="px-4 py-2 mt-2 text-base font-semibold rounded-lg md:mt-0 md:ml-4 hover: focus: hover:bg-primary focus:bg-primary focus:outline-none focus:shadow-outline ui" href=/Tokenization/tokenization/ title="Tokenization Interface">Tokenization Interface
 </a><button id=theme-toggle type=button class="p-2 text-base text-gray-500 rounded-lg md: dark:text-gray-400 md:hover:bg-gray-100 dark:md:hover:bg-gray-700 md:focus:outline-none md:focus:ring-4 md:focus:ring-gray-200 dark:md:focus:ring-gray-700 md:ml-2 xs:hidden">
 <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001.0 1010.586 10.586z"/></svg>
