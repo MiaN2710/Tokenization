@@ -27,6 +27,19 @@ html, body {
 .text-zinc-900 { color: #18181b !important; }
 .text-zinc-600 { color: #52525b !important; }
 
+/* Fix all white text to be dark and visible */
+.text-white { color: #111827 !important; }
+.text-gray-100 { color: #111827 !important; }
+.text-gray-200 { color: #374151 !important; }
+.text-gray-300 { color: #6b7280 !important; }
+h1, h2, h3, h4, h5, h6 { color: #111827 !important; }
+p { color: #374151 !important; }
+
+/* Navigation and header fixes */
+.bg-gray-200 { background-color: #e5e7eb !important; }
+a { color: #1f2937 !important; }
+button { color: #1f2937 !important; }
+
 /* Upload box styling */
 .upload-box { 
   background-color: #ffffff !important;
@@ -39,6 +52,20 @@ html, body {
   border-color: #60a5fa !important;
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
 }
+
+/* Tokenization interface specific fixes */
+#tokenization-interface { background-color: #f9fafb !important; }
+#tokenization-interface h3 { color: #111827 !important; }
+#tokenization-interface h4 { color: #111827 !important; }
+#tokenization-interface h5 { color: #111827 !important; }
+#tokenization-interface p { color: #374151 !important; }
+#tokenization-interface label { color: #374151 !important; }
+.token { color: #111827 !important; }
+.progress-text { color: #374151 !important; }
+
+/* Button styling */
+.bg-primary-500, .bg-secondary-500 { color: #ffffff !important; }
+button[class*="bg-primary"], button[class*="bg-secondary"] { color: #ffffff !important; }
 </style></head><body class="bg-gray-50"><div class="top-0 z-50 w-full bg-gray-200 bg-neutral md:sticky"><div x-data="{ open: false }" class="flex flex-col px-4 mx-auto max-w-full md:items-center md:justify-between md:flex-row md:px-6 lg:px-8"><div class="flex flex-row justify-between items-center p-4"><a href=/Tokenization/ class="flex text-gray-100 transition duration-1000 ease-in-out group"><img src=/Tokenization/images/logos/Kinethic-logo.svg class="w-9 h-9 transition-opacity group-hover:opacity-50 group-focus:opacity-70" alt="KINETIC TOKENIZATION Logo" style=width:150px;height:50px><div class="mt-1 ml-3 text-xl font-black tracking-tight text-gray-100 uppercase transition-colors group-hover:text-gray-400/60"></div></a><button class="rounded-lg md:hidden focus:outline-none focus:shadow-outline" @click="open = !open" role=button :aria-expanded=open aria-label="Toggle navigation menu" aria-controls=menuItems>
 <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6"><path x-show="!open" fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4A1 1 0 013 5zm0 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm6 5a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z" clip-rule="evenodd"/><path x-show="open" fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414.0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg></button></div><nav id=menuItems x-cloak :class="{'flex': open, 'hidden': !open}" class="hidden flex-col flex-grow pb-4 md:pb-0 md:flex md:justify-end md:flex-row"><a class="px-4 py-2 mt-2 text-base font-semibold rounded-lg md:mt-0 md:ml-4 hover: focus: hover:bg-primary focus:bg-primary focus:outline-none focus:shadow-outline ui" href=/Tokenization/tokenization/ title="Tokenization Interface">Tokenization Interface
 </a><button id=theme-toggle type=button class="p-2 text-base text-gray-500 rounded-lg md: dark:text-gray-400 md:hover:bg-gray-100 dark:md:hover:bg-gray-700 md:focus:outline-none md:focus:ring-4 md:focus:ring-gray-200 dark:md:focus:ring-gray-700 md:ml-2 xs:hidden">
